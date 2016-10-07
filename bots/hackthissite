@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+require_relative '../requires.rb'
+
+config_settings = {
+  :nick         => 'x509',
+  :owner        => 'Ninjex',
+  :server       => 'irc.hackthissite.org',
+  :port         => '7000',
+  :ssl          => true,
+  :chans        => '#coffeesh0p',
+  :command_list => [],
+}
+
+@bot = Bot.new(config_settings)
+@bot.info
+@bot.start

@@ -1,5 +1,5 @@
 class Bot < Init
-  attr_accessor :nick, :owner, :port, :chans,
+  attr_accessor :nick, :owner, :port, :chans, :chan,
                 :bot_pass, :server_pass, :ssl, :server,
                 :command_list, :socket
 
@@ -88,6 +88,7 @@ def connect
       user_name_first  = user_name_array[0][1..-1]  #=> array[Ninjex]
       user_name_second = user_name_array[1]         #=> array[bounces]
       user_host        = user_array[1]              #=> array[HTS-ED9DAF7A.kphservices.com]
+      @chan = input[2]
       hook.fetch(input, user_name_first) if input.size >= 4
     end
   end

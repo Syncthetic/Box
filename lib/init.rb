@@ -22,7 +22,6 @@ class Init
   end
 
   def initialize_socket
-    @port = @ssl_port if @ssl
     socket = TCPSocket.new(@server, @port)
     if @ssl
       require 'openssl'

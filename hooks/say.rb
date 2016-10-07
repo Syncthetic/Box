@@ -2,7 +2,7 @@ say = Command.new({
   :priv      => 'all',
   :locked    => false,
   :hook      => ->(string) {
-    raw_send("PRIVMSG #{@bot.chans} :#{string}")
+    raw_send("PRIVMSG #{@bot.chan} :#{string}")
     #puts "PRIVMSG #{@bot.chans} :#{string}"
   },
   :cb        => '!say',

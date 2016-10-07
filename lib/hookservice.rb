@@ -8,6 +8,7 @@ class HookService
         cb = data[3][1..-1]
         if hook.cb == cb
           puts "Calling Hook: #{cb}"
+          @bot.chan = user if hook.type == 'notice'
           if hook.args != false
             hook.args = data.drop(4).join(' ')
           end

@@ -1,5 +1,5 @@
 class Command < HookService
-  attr_accessor :help, :priv, :args, :usage, :locked
+  attr_accessor :help, :priv, :args, :usage, :locked, :type
   def initialize(settings)
     settings.each do |key, val|
       self.instance_variable_set('@' + key.to_s, val)
