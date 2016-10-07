@@ -3,7 +3,6 @@ help = Command.new({
   :locked    => false,
   :hook      => ->() {
     hooks = @bot.command_list
-    raw_send("PRIVMSG #{@bot.chans} :Sending Help commands via NOTICE, #{@bot.chan}")
     raw_send("NOTICE #{@bot.chan} :HELP MENU")
     hooks.map { |hook|
       raw_send("NOTICE #{@bot.chan} :#{hook.cb} (#{hook.priv})")

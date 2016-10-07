@@ -8,7 +8,12 @@ class HookService
         cb = data[3][1..-1]
         if hook.cb == cb
           puts "Calling Hook: #{cb}"
-          @bot.chan = user if hook.type == 'notice'
+          
+          if hook.type == 'notice'
+            raw_send("PRIVMSG #{@bot.chan} :Sending INFORMATION via NOTICE, #{user}")
+            @bot.chan = user
+          end
+
           if hook.args != false
             hook.args = data.drop(4).join(' ')
           end
@@ -24,7 +29,7 @@ class HookService
             if user == @bot.owner
               hook.call_hook
             else
-              raw_send("PRIVMSG #{@bot.chans} :#{user}, you are not my owner...")
+              raw_send("PRIVMSG #{@bot.chan} :#{user}, you are not my owner...")
             end
           when 'mod'
             # PERFORM AUTHENTICATION CHECK
