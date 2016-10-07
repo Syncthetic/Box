@@ -1,0 +1,15 @@
+#!/usr/bin/ruby
+require_relative '../requires.rb'
+
+config_settings = {
+  :nick         => 'BotNick',
+  :owner        => 'syncthetic',
+  :server       => 'asimov.freenode.net',
+  :port         => '6667',
+  :chans      => '#bek',
+  :command_list => [],
+}
+
+@bot = Bot.new(config_settings)
+@bot.info
+@bot.start
