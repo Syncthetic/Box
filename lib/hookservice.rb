@@ -1,8 +1,7 @@
-#HOOKSERVICE CLASS
 class HookService
   attr_accessor :cb, :hook
   attr_writer :bot
-  
+
   def fetch(data, user)
     @bot.command_list.each do |hook|
       begin

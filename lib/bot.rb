@@ -1,4 +1,3 @@
-
 class Bot < Init
   attr_accessor :nick, :owner, :port, :chans,
                 :bot_pass, :server_pass, :ssl, :server,

@@ -1,4 +1,3 @@
-#COMMAND class
 class Command < HookService
   attr_accessor :help, :priv, :args, :usage, :locked
   def initialize(settings)

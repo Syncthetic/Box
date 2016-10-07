@@ -1,4 +1,3 @@
-# INIT CLASS
 class Init
   BASE      = File.dirname(__FILE__) + '/../'
   HOOKS     = BASE + 'hooks/'
