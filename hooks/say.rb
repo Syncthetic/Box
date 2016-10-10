@@ -3,7 +3,7 @@ say = Command.new({
   :locked    => false,
   :hook      => ->() {
     string = @bot.get[:socket_data].drop(4).join(' ')
-    raw_send("PRIVMSG #{@bot.get[:channel]} :'#{string}'")
+    raw_send("PRIVMSG #{@bot.get[:channel]} :\"#{string}\"")
   },
   :cb        => '!say',
   :usage     => '!say <string ... 1> <string ... 2> <string ... n>',

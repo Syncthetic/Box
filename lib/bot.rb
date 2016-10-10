@@ -83,6 +83,7 @@ def connect
       if input[0] == 'ERROR' and input[1] == ':Closing' and input[2] == 'Link:'
         puts "[!] Your host: #{input[3]} has been banned or removed from the server: #{@server}"
         puts "[+] Attempting to Reconnect"
+        self.initialize_socket
         self.connect
       end
       @get[:user_data] = input[1]
