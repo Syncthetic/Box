@@ -1,13 +1,14 @@
 class Bot < Init
   attr_accessor :nick, :owner, :port, :chans, :chan,
                 :bot_pass, :server_pass, :ssl, :server,
-                :command_list, :socket
+                :command_list, :socket, :get, :notification
 
 
   def initialize(settings)
     settings.each do |key, val|
       self.instance_variable_set('@' + key.to_s, val)
     end
+    @get = {}
   end
 
   def request_password
@@ -45,6 +46,7 @@ class Bot < Init
 def connect
     hook = HookService.new
     hook.bot = self
+    @get[:joined_channels] = @chans
     puts "[+] Connecting to: #{@server}"
 
     identified = false
@@ -70,8 +72,10 @@ def connect
       input = data.split(' ')
       @socket.puts "PONG #{input[1]}" if input[0] == 'PING'
       if input[1] == '376'
-        @socket.puts "JOIN #{@chans}"
-        if @pass
+        @chans.each do |chan|
+          @socket.puts("JOIN #{chan}")
+        end
+        if @bot_pass
           self.notification = '  <-- Bot Password Request [+]'
           Thread.new { request_password }
         end
@@ -81,15 +85,11 @@ def connect
         puts "[+] Attempting to Reconnect"
         self.connect
       end
-      # Gather some useful host information from calls
-      full_user        = input[0]                   #=> array[:Ninjex!bounces@HTS-ED9DAF7A.kphservices.com]
-      user_array       = full_user.split('@')       #=> array[:Ninjex!bounces, HTS-ED9DAF7A.kphservices.com]
-      user_name_array  = user_array[0].split('!')   #=> array[:Ninjex, bounces]
-      user_name_first  = user_name_array[0][1..-1]  #=> array[Ninjex]
-      user_name_second = user_name_array[1]         #=> array[bounces]
-      user_host        = user_array[1]              #=> array[HTS-ED9DAF7A.kphservices.com]
-      @chan = input[2]
-      hook.fetch(input, user_name_first) if input.size >= 4
+      @get[:user_data] = input[1]
+      @get[:host_data] = host_data(input[0])
+      @get[:channel] = input[2]
+      @get[:socket_data] = input
+      hook.fetch() if input.size >= 4
     end
   end
 end

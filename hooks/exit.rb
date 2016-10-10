@@ -4,7 +4,6 @@ exit = Command.new({
   :cb        => '!exit',
   :usage     => '!exit',
   :help      => 'Sends QUIT message',
-  :args => false,
   :hook      => ->() {
     raw_send "QUIT Ninjex made me do it..."
   },

@@ -4,6 +4,8 @@ class Init
   FUNCTIONS = BASE + 'functions/'
 
   def initialize_hooks
+    puts ""
+    puts "*** INITIALIZING HOOKS ***"
     Dir.foreach(HOOKS) do |file|
       if file.include?('.rb')
         puts "[+] Initializing Hook: #{file[0..-4]}"
@@ -13,6 +15,8 @@ class Init
   end
 
   def initialize_functions
+    puts ""
+    puts "*** INITIALIZING FUNCTIONS ***"
     Dir.foreach(FUNCTIONS) do |file|
       if file.include?('.rb')
         puts "[+] Loading Function: #{file[0..-4]}"
@@ -22,6 +26,8 @@ class Init
   end
 
   def initialize_socket
+    puts ""
+    puts "*** INITIALIZING SOCKET ***"
     socket = TCPSocket.new(@server, @port)
     if @ssl
       require 'openssl'

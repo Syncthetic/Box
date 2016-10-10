@@ -2,20 +2,21 @@ class HookService
   attr_accessor :cb, :hook
   attr_writer :bot
 
-  def fetch(data, user)
+  def fetch()
+    data = @bot.get[:socket_data]
     @bot.command_list.each do |hook|
       begin
         cb = data[3][1..-1]
         if hook.cb == cb
           puts "Calling Hook: #{cb}"
-          
+
           if hook.type == 'notice'
-            raw_send("PRIVMSG #{@bot.chan} :Sending INFORMATION via NOTICE, #{user}")
-            @bot.chan = user
+            raw_send("PRIVMSG #{@bot.get[:channel]} :Sending INFORMATION via NOTICE, #{@bot.get[:host_data][:nickname]}")
+            @bot.get[:channel] = @bot.get[:host_data][:nickname]
           end
 
-          if hook.args != false
-            hook.args = data.drop(4).join(' ')
+          if hook.type == 'broadcast'
+            raw_send("NOTICE #{@bot.owner} :Sending Broadcast message!")
           end
 
           if hook.locked == true
@@ -26,10 +27,10 @@ class HookService
           case hook.priv
           when 'owner'
             # PERFORM AUTHENTICATION CHECK
-            if user == @bot.owner
+            if @bot.get[:host_data][:nickname] == @bot.owner
               hook.call_hook
             else
-              raw_send("PRIVMSG #{@bot.chan} :#{user}, you are not my owner...")
+              raw_send("PRIVMSG #{@bot.chan} :#{@bot.get[:host_data][:nickname]}, you are not my owner...")
             end
           when 'mod'
             # PERFORM AUTHENTICATION CHECK

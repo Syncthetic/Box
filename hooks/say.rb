@@ -1,13 +1,12 @@
 say = Command.new({
   :priv      => 'all',
   :locked    => false,
-  :hook      => ->(string) {
-    raw_send("PRIVMSG #{@bot.chan} :#{string}")
-    #puts "PRIVMSG #{@bot.chans} :#{string}"
+  :hook      => ->() {
+    string = @bot.get[:socket_data].drop(4).join(' ')
+    raw_send("PRIVMSG #{@bot.get[:channel]} :'#{string}'")
   },
   :cb        => '!say',
   :usage     => '!say <string ... 1> <string ... 2> <string ... n>',
   :help      => 'Message current channel with <string ... n> data',
-  :args      => true, # Can we pass it here?
   :bot       => @bot
 })

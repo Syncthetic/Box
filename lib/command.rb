@@ -1,5 +1,5 @@
 class Command < HookService
-  attr_accessor :help, :priv, :args, :usage, :locked, :type
+  attr_accessor :help, :priv, :usage, :locked, :type
   def initialize(settings)
     settings.each do |key, val|
       self.instance_variable_set('@' + key.to_s, val)
@@ -11,7 +11,7 @@ class Command < HookService
   end
   def call_hook
     begin
-      self.args ? self.hook.call(self.args) : self.hook.call
+      self.hook.call
     rescue Exception => e
       puts "#{e}"
     end
